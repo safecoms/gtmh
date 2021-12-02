@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_purchase_order_type_manager,access_purchase_order_type_manager,model_purchase_order_type,purchase.group_purchase_manager,1,1,1,1
+access_purchase_order_type_salesman,access_purchase_order_type_salesman,model_purchase_order_type,purchase.group_purchase_user,1,0,0,0
+access_purchase_order_type_account,access_purchase_order_type_account,model_purchase_order_type,account.group_account_invoice,1,0,0,0
+
+access_purchase_refuse_wizard,access_purchase_refuse_wizard,model_purchase_refuse_wizard,base.group_user,1,1,1,1

@@ -1,0 +1,69 @@
+<odoo>
+  <data>
+    <record id="sot_view_order_form" model="ir.ui.view">
+        <field name="name">purchase.order.form</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//button[@name='button_approve']" position="after">
+              <field name="show_first_approval" invisible='1'/>
+              <field name="show_second_approval" invisible='1'/>
+              <field name="show_third_approval" invisible="1"/>
+              <button name="action_request_first_approval" type="object" states="draft,sent" string="Request First Approval" class="oe_highlight"/>
+              <button name="action_approve_first_approval" type="object" attrs="{'invisible':[('show_first_approval','=',False)]}" string="Approve" class="oe_highlight"/>
+
+              <button name="action_request_second_approval" type="object" states="first_approval_approved" string="Request Second Approval" class="oe_highlight"/>
+              <button name="action_approve_second_approval" type="object" attrs="{'invisible':[('show_second_approval','=',False)]}" string="Approve" class="oe_highlight"/>
+
+              <button name="action_request_third_approval" type="object" states="second_approval_approved" string="Request Third Approval" class="oe_highlight"/>
+              <button name="action_approve_third_approval" type="object" attrs="{'invisible':[('show_third_approval','=',False)]}" string="Approve" class="oe_highlight"/>
+
+              <button name="%(purchase_approval.purchase_refuse_wizard_action)d" 
+                context="{'purchase_refuse_model':'purchase.order'}" string="Refuse" 
+                type="action" attrs="{'invisible':[('show_first_approval','=',False),('show_second_approval','=',False),('show_third_approval','=',False)]}"
+                />
+
+            </xpath>
+
+            <xpath expr="//button[@name='button_confirm'][1]" position="replace">
+              <button name="button_confirm" type="object" states="third_approval_approved" string="Confirm Order" class="oe_highlight" id="bid_confirm"/>
+            </xpath>
+
+            <xpath expr="//button[@name='button_confirm'][2]" position="replace">
+              <button name="button_confirm" type="object" states="third_approval_approved" string="Confirm Order" id="draft_confirm" invisible="1"/>
+            </xpath>
+
+            <xpath expr="//button[@name='button_cancel']" position="replace">
+              <button name="button_cancel" states="draft,to approve,sent,purchase,first_approval_approved,second_approval_approved,third_approval_approved" string="Cancel" type="object" />
+            </xpath>
+
+            <xpath expr="//field[@name='partner_ref']" position="after">
+              <field name="type_id"/>
+            </xpath>
+            
+           <!--  <xpath expr="//header" position="replace">
+              <button name="action_rfq_send" states="draft" string="Send by Email" type="object" context="{'send_rfq':True}" class="oe_highlight"/>
+              <button name="print_quotation" string="Print RFQ" type="object" states="draft" class="oe_highlight" groups="base.group_user"/>
+              <button name="button_approve" type="object" states='to approve' string="Approve Order" class="oe_highlight" groups="purchase.group_purchase_manager"/>
+              <field name="show_first_approval" invisible='1'/>
+              <button name="action_request_first_approval" type="object" states="draft" string="Request First Approval" class="oe_highlight"/>
+              <button name="action_approve_first_approval" type="object" attrs="{'invisible':[('show_first_approval','=',True)]}" string="Approve" class="oe_highlight"/>
+
+              <button name="action_create_invoice" string="Create Bill" type="object" class="oe_highlight" context="{'create_bill':True}" attrs="{'invisible': ['|', ('state', 'not in', ('purchase', 'done')), ('invoice_status', 'in', ('no', 'invoiced'))]}"/>
+              <button name="action_rfq_send" states="sent" string="Re-Send by Email" type="object" context="{'send_rfq':True}"/>
+              <button name="print_quotation" string="Print RFQ" type="object" states="sent" groups="base.group_user"/>
+              <button name="action_rfq_send" states="purchase" string="Send PO by Email" type="object" context="{'send_rfq':False}"/>
+              <button name="confirm_reminder_mail" string="Confirm Receipt Date" type="object" attrs="{'invisible': ['|','|', ('state', 'not in', ('purchase', 'done')), ('mail_reminder_confirmed', '=', True), ('date_planned', '=', False)]}" groups="base.group_no_one"/>
+              <button name="action_create_invoice" string="Create Bill" type="object" context="{'create_bill':True}" attrs="{'invisible': ['|', '|', ('state', 'not in', ('purchase', 'done')), ('invoice_status', 'not in', ('no', 'invoiced')), ('order_line', '=', [])]}"/>
+              <button name="button_draft" states="cancel" string="Set to Draft" type="object" />
+              <button name="button_cancel" states="draft,to approve,sent,purchase" string="Cancel" type="object" />
+              <button name="button_done" type="object" string="Lock" states="purchase"/>
+              <button name="button_unlock" type="object" string="Unlock" states="done" groups="purchase.group_purchase_manager"/>
+              <field name="state" widget="statusbar" statusbar_visible="draft,sent,purchase" readonly="1"/>
+            </xpath>
+ -->
+        </field>
+    </record>
+  </data>
+</odoo>

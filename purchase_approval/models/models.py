@@ -18,9 +18,9 @@ class PurchaseOrderTypology(models.Model):
 	
 	payment_term_id = fields.Many2one('account.payment.term', 'Payment Term')
 
-	first_approval_person = fields.Many2one('res.users',string="1st Approver",store=True)
-	second_approval_person = fields.Many2one('res.users',string="2nd Approver",store=True)
-	third_approval_person = fields.Many2one('res.users',string="3rd Approver",store=True)
+	first_approval_person = fields.Many2one('res.users',string="1st Approver",store=True,required=True)
+	second_approval_person = fields.Many2one('res.users',string="2nd Approver",store=True,required=True)
+	third_approval_person = fields.Many2one('res.users',string="3rd Approver",store=True,required=True)
 
 
 class PurchaseOrder(models.Model):
